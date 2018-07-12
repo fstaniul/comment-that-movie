@@ -1,7 +1,9 @@
 # comment-that-movie
+
 Simple REST Api which allows commenting on movies. It is using external movies resource at omdbapi.com
 
 ## Installation
+
 You will need `node.js` with `npm` installed on your machine.
 
 ```
@@ -11,14 +13,19 @@ $ npm install
 ```
 
 ## Running
-To run development version specify enviroment variable `NODE_ENV=development`
 
-**On windows:**
+**Using heroku:**
+
 ```
-$ set NODE_ENV=development && node src/server.js
+$ heroku local
 ```
 
-**On Unix-like system**:
+You should be able to access the REST Api at `localhost:3000`.
+
+**Manually:**
+
 ```
-$ NODE_ENV=development node src/server.js
+node src/server.js
 ```
+
+By default app will run in `development` mode. To enable `production` mode set enviroment variable `NODE_ENV=production`. Production mode uses PostgreSQL so you will need that too. To set database connection url set `DATABASE_URL=your/database/url`. **Heroku** uses `.env` file for enviroment variables, so if you are running it with **heroku**, edit `.env`.
