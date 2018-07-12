@@ -7,20 +7,32 @@ const readdir = promisify(fs.readdir);
 
 const IS_DEV = (process.env.NODE_ENV || 'development') === 'development';
 
-// setup database connection and export Sequelize object
-const database = (module.exports = new Sequelize(process.env.DATABASE_URL || ':memory:', {
+const DEFAULT_DATABASE_SETTINGS = {
   operatorsAliases: false,
-}));
+};
+
+let database;
+
+if (IS_DEV || !process.env.DATABASE_URL) {
+  database = module.exports = new Sequelize({
+    ...DEFAULT_DATABASE_SETTINGS,
+    dialect: 'sqlite',
+    storage: ':memory:',
+  });
+} else {
+  database = module.exports = new Sequelize(process.env.DATABASE_URL, {
+    ...DEFAULT_DATABASE_SETTINGS,
+  });
+}
 
 // Laod models stored in models folder
 const modelsLoadedPromise = readdir(path.join(__dirname, 'models')).then((modelFiles) => {
   for (const modelFile of modelFiles) {
-    const name = modelFile.replace(/\.js/, '');
-    database.import(name, require(path.join(__dirname, 'models', modelFile)));
+    database.import(path.join(__dirname, 'models', modelFile));
   }
 });
 
 /**
  * Connects to database, returns promise after successful connection.
  */
-database.start = () => modelsLoadedPromise.then(() => database.sync({ force: IS_DEV }));
+database.start = (force) => modelsLoadedPromise.then(() => database.sync({ force: IS_DEV || force }));
