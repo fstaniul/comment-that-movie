@@ -33,4 +33,7 @@ const modelsLoadedPromise = readdir(path.join(__dirname, 'models')).then((modelF
 /**
  * Connects to database, returns promise after successful connection.
  */
-database.start = (force) => modelsLoadedPromise.then(() => database.sync({ force: env === 'development' || force }));
+database.start = (force) =>
+  modelsLoadedPromise
+    .then(() => database.sync({ force: env === 'development' || force }))
+    .then(() => console.log('Database initialized and connected.'));
