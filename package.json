@@ -1,0 +1,33 @@
+{
+  "name": "comment-that-movie",
+  "version": "1.0.0",
+  "description": "Simple REST Api which allows commenting on movies. Using external movies resource at omdbapi.com.",
+  "main": "src/server.js",
+  "engines": {
+    "node": "10.6.0"
+  },
+  "scripts": {
+    "start": "node ./src/server.js",
+    "test": "mocha ./src/*.test.js ./test/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vip1all/comment-that-movie.git"
+  },
+  "keywords": [
+    "movies",
+    "rest"
+  ],
+  "author": "Filip Staniul",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vip1all/comment-that-movie/issues"
+  },
+  "homepage": "https://github.com/vip1all/comment-that-movie#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.38.0"
+  }
+}
