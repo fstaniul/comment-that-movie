@@ -1,4 +1,4 @@
-const isProduction = process.env.NODE_ENV === 'production';
+const env = process.env.NODE_ENV;
 
 module.exports = function(seq, datatype) {
   const Movie = seq.define(
@@ -6,7 +6,7 @@ module.exports = function(seq, datatype) {
     {
       id: { type: datatype.UUID, defaultValue: datatype.UUIDV4, primaryKey: true },
       title: { type: datatype.STRING, allowNull: false },
-      data: { type: idProduction ? datatype.JSONB : datatype.JSON, allowNull: false },
+      data: { type: env === 'production' ? datatype.JSONB : datatype.JSON, allowNull: false },
     },
     {
       timestamps: false,

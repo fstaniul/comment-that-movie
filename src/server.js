@@ -4,12 +4,12 @@ if (!process.env.OMDB_API_KEY) {
   console.log('Cannot find omdbapi.com apikey.');
   console.log('Please ensure that enviroment variable OMDB_API_KEY is set with a apikey for omdbapi.com');
   console.log('Application will exit now.');
-  process.exit();
+  process.exit(1);
 }
 
 const PORT = process.env.PORT || 3000;
-
 const express = require('express');
+const bodyParser = require('body-parser');
 const database = require('./database');
 
 const app = express();
