@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 app.start = async function() {
   await app.db.start();
   return new Promise((resolve, reject) => {
-    app.listen(PORT, (err) => {
+    app.server = app.listen(PORT, (err) => {
       if (err) return reject(err);
       else {
         console.log(`Server started and listening for connections on port :${PORT}`);
@@ -36,6 +36,30 @@ app.start = async function() {
     });
   });
 };
+
+app.close = function() {
+  function logClose() {
+    console.log('Server stopped gracefully.');
+  }
+
+  if (app.server) {
+    return new Promise((resolve) => {
+      app.server.close(() => {
+        app.database
+          .close()
+          .then(logClose)
+          .then(resolve);
+      });
+    });
+  }
+
+  return app.database.close().then(logClose);
+};
+
+// wait to drain all connections and then gracefully kill server #nodowntime
+process.on('SIGTERM', () => {
+  app.close();
+});
 
 // executed by calling node src/server.js
 if (require.main === module) {
