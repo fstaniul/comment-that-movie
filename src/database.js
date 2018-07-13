@@ -13,27 +13,34 @@ if (env === 'production' && !dbUrl) {
   process.exit(1);
 }
 
-function databaseLog(msg) {
-  debug(msg);
-}
-
 const database = (module.exports = new Sequelize(dbUrl || 'sqlite://:memory:', {
   operatorsAliases: false,
-  logging: env === 'production' ? false : databaseLog,
+  logging: env === 'production' ? false : (msg) => debug(msg),
 }));
 
-// Laod models stored in models folder
-const modelsLoadedPromise = readdir(path.join(__dirname, 'models')).then((modelFiles) => {
+function associateModels() {
+  const promises = Object.values(database.models).map((model) =>
+    Promise.resolve(model.associate && model.associate(database))
+  );
+  return Promise.all(promises);
+}
+
+function importModels(modelFiles) {
   for (const modelFile of modelFiles) {
     const model = database.import(path.join(__dirname, 'models', modelFile));
     database.models[model.name] = model;
   }
-});
+}
+
+// Laod models stored in models folder
+const modelsImportedPromise = readdir(path.join(__dirname, 'models'))
+  .then(importModels)
+  .then(associateModels);
 
 /**
  * Connects to database, returns promise after successful connection.
  */
 database.start = (force) =>
-  modelsLoadedPromise
-    .then(() => database.sync({ force: env === 'development' || force }))
+  modelsImportedPromise
+    .then(() => database.sync({ force }))
     .then(() => console.log('Database initialized and connected.'));
