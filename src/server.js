@@ -12,7 +12,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const database = require('./database');
 
-const app = express();
+const app = (module.exports = express());
 
 app.db = database;
 app.use(bodyParser.json());
@@ -23,6 +23,9 @@ app.use(require('./api/movies'), require('./api/comments'));
 app.get('/', (req, res) => {
   res.send('Checkout the github repo for this REST Api: https://github.com/vip1all/comment-that-movie');
 });
+
+//set error handler
+app.use(require('./error-handler'));
 
 app.start = async function() {
   await app.db.start();
