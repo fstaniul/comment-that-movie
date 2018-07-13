@@ -48,7 +48,7 @@ app.close = function() {
   if (app.server) {
     return new Promise((resolve) => {
       app.server.close(() => {
-        app.database
+        app.db
           .close()
           .then(logClose)
           .then(resolve);
@@ -56,7 +56,7 @@ app.close = function() {
     });
   }
 
-  return app.database.close().then(logClose);
+  return app.db.close().then(logClose);
 };
 
 // wait to drain all connections and then gracefully kill server #nodowntime

@@ -1,6 +1,6 @@
 module.exports = function(err, req, res, next) {
   if (err) {
-    console.log('\n' + JSON.stringify(err, null, 2));
+    if (process.env.NODE_ENV !== 'test') console.log('\n' + JSON.stringify(err, null, 2));
   }
 
   if (err.httpcode) {
