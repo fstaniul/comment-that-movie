@@ -75,21 +75,67 @@ Viola.
     <th>Description</th>
   </tr>
   <tr>
-    <td rowspan=2>`/movies`</td>
+    <td rowspan="2"><code>/movies<code></td>
     <td>GET</td>
     <td>
       <ul>
-        <li>id - get movie by its id</li>
-        <li>title - get movie by its titile</li>
-        <li>limit - limit result to that number</li>
-        <li>skip - skip first x results</li>
+        <li><code>id</code></li>
+        <li><code>title</code></li>
+        <li><code>limit</code></li>
+        <li><code>skip</code></li>
       </ul>
     </td>
     <td>
       <ul>
-        <li><i>id</i> and <i>title</i> are exclusive, where <i>id</i> takes precedance.</li>
-        <li>all options are optional, when id and title are omited returns multiple resources.</li>
-        <li>when <i>id** or <i>title</i> is present then <i>limit</i> and <i>skip</i> has no effect.</li>
+        <li>
+          You can get movie by its <i>id</i> or <i>title</i>.
+          <i>id</i> and <i>title</i> are exclusive, where <i>id</i> takes precedance.
+        </li>
+        <li>all options are optional, when id and title are omited returns multiple values.</li>
+        <li>Use <i>limit</i> to limit result to specified number.</li>
+        <li>Use <i>skip</i> to skip returning specified results.</li>
+        <li><i>limit</i> and <i>skip</i> can be used to create pagination.</li>
+        <li>when <i>id</i> or <i>title</i> is present then <i>limit</i> and <i>skip</i> has no effect.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>POST</td>
+    <td><ul><li><code>title</code></li></ul></td>
+    <td><ul><li><i>movie title</i> is only one parameter and it is required to be present in request body.</li></ul></td>
+  </tr>
+  <tr>
+    <td rowspan="2"><code>/comments</code></td>
+    <td>GET</td>
+    <td>
+      <ul>
+        <li><code>movieId</code></li>
+        <li><code>limit</code></li>
+        <li><code>skip</code></li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>When <i>movieId</i> is present returns only comments for specified movie by its id.</li>
+        <li>Use <i>limit</i> to limit result to specified number.</li>
+        <li>Use <i>skip</i> to skip returning specified results.</li>
+        <li><i>limit</i> and <i>skip</i> can be used to create pagination.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>POST</td>
+    <td>
+      <ul>
+        <li><code>comment</code></li>
+        <li><code>movieId</code></li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Both parameters are required to be present in request body.</li>
+        <li><i>movieId</i> needs to be valid and present movie id, use GET /movies to get list of movies or POST /movies to create one</li>
+        <li><i>comment</i> should contain comment message for specified movie</li>
       </ul>
     </td>
   </tr>
