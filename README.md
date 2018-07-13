@@ -48,3 +48,19 @@ $ OMDB_API_KEY=YourApiKey node src/server.js
 
 If you would like to change the default port of the application simply use enviroment variable `PORT`:
 In `.env`: `PORT=1234` or when running from console `OMDB_API_KEY=YourApiKey PORT=1234 node src/server.js`.
+
+## Testing
+
+To run tests you will need to get omdb apikey, head over (here)[http://www.omdbapi.com/apikey.aspx]. After you get your key create `.env` file and put it here:
+
+```
+OMDB_API_KEY=YourApiKey
+```
+
+Then run tests:
+
+```
+npm test
+```
+
+Viola.
