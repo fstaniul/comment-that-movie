@@ -6,10 +6,13 @@ const router = (module.exports = express.Router());
 function movieExists(movieId) {
   const Movie = app.db.models.Movie;
   return Movie.findById(movieId).then((movie) => {
-    if (!movie)
+    if (!movie) {
       return Promise.reject({
         message: 'Cannot create comment for not existing movie. Invalid movie id!',
       });
+    } else {
+      return Promise.resolve();
+    }
   });
 }
 

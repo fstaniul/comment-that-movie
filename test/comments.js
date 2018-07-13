@@ -96,6 +96,8 @@ describe('/comments', () => {
           response.should.have.status(200);
           response.body.should.have.property('count').equal(3);
           response.body.should.have.property('comments').that.has.lengthOf(3);
+          for (let i = 0; i < 3; i++)
+            response.body.comments[i].should.have.property('movieId').equal(__comments[0].movieId);
         });
     });
   });
