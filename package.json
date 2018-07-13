@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "node src/server.js",
-    "test": "mocha ./test/**/*.js"
+    "test": "mocha ./test/**/*.js",
+    "e2e": "mocha ./e2e/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -37,7 +38,6 @@
     "dotenv": "^6.0.0",
     "chai": "^4.1.2",
     "chai-arrays": "^2.0.0",
-    "chai-as-promised": "^7.1.1",
     "chai-http": "^4.0.0",
     "mocha": "^5.2.0",
     "sqlite3": "^4.0.1"
